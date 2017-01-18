@@ -3,37 +3,29 @@ class bicycle(object):
         self.name = name
         self.weight = weight
         self.prodcost = prodcost
-        
     
 class bikeshop(object):
-    def __init(self, name, inventory):
+    def __init__(self, name, inventory, margin, profit = 0):
         self.name = name
         self.inventory = inventory
-    
-    def margin(self, margin):
-        prices = {}
-        for i in self.bikes():
-            prices[self.bikes.prodcost] = (1+margin)*self.bikes.prodcost 
+        self.margin = margin
+        self.profit = profit
     
 class customers(object):
-    def __init(self, name, budget):
+    def __init__(self, name, budget):
         self.name = name
         self.budget = budget
-
-Rager = bicycle("Rager",10, 100)
-Air = bicycle("Air", 4, 200)
-Trusty = bicycle("Trusty", 15, 50)
-Dust = bicycle("Dust", 8, 120)
-Glider = bicycle("Glider", 5, 180)
-Roller = bicycle("Roller", 12, 75)
-inventory_list = [Rager, Air, Trusty, Dust, Glider, Roller]
-Mike = bikeshop("Mike's", inventory_list)
-print("\nShop name: {0}.".format(bikeshop.name))
-print("\nInventory")
-print("-" * 20)
-for bike in range(len(inventory_list)):
-    print(inventory_list[bike])
+    
+    def buybike(self, purchased_bike, bikeshop):
+        purchase_price = purchased_bike.prodcost*(1+bikeshop.margin)
+        self.budget -= purchase_price
+        bikeshop.profit += bikeshop.margin*purchased_bike.prodcost
+        bikeshop.inventory[purchased_bike] -= 1
+        print("{}, you have purchased {} for ${}. You have ${} left to spend.".format(self.name, purchased_bike.name, purchase_price, self.budget))
+        print("The bikeshop, {}, has made ${} in profit and has the following bikes remaining:\n".format(bikeshop.name, bikeshop.profit))
+        
+        for n in bikeshop.inventory:
+            print("{}: {}".format(n.name,bikeshop.inventory[n]))
     
 
-       
     
